@@ -200,18 +200,14 @@ require('telescope').setup {
         ['<C-u>'] = false, ['<C-d>'] = false,
       },
     },
+    layout_strategy = 'vertical',
+    layout_config = {
+      center = { height = 0.5 }
+    },
     file_ignore_patterns = {
       'node_modules',
       'spec/fixtures/vcr',
     }
-  },
-  pickers = {
-    find_files = {
-      theme = "dropdown",
-    },
-    live_grep = {
-      theme = "dropdown",
-    },
   },
 }
 
