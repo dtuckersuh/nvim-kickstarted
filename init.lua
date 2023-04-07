@@ -130,6 +130,8 @@ vim.o.cursorline = true
 -- allows neovim to access the system clipboard
 vim.o.clipboard = "unnamedplus"
 
+vim.o.maxmempattern=5000
+
 -- [[ Basic Keymaps ]]
 -- Set <space> as the leader key
 -- See `:help mapleader`
@@ -195,9 +197,20 @@ require('telescope').setup {
   defaults = {
     mappings = {
       i = {
-        ['<C-u>'] = false,
-        ['<C-d>'] = false,
+        ['<C-u>'] = false, ['<C-d>'] = false,
       },
+    },
+    file_ignore_patterns = {
+      'node_modules',
+      'spec/fixtures/vcr',
+    }
+  },
+  pickers = {
+    find_files = {
+      theme = "dropdown",
+    },
+    live_grep = {
+      theme = "dropdown",
     },
   },
 }
@@ -226,7 +239,7 @@ vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { de
 -- See `:help nvim-treesitter`
 require('nvim-treesitter.configs').setup {
   -- Add languages to be installed here that you want installed for treesitter
-  ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'typescript', 'help', 'vim', 'ruby' },
+  ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'typescript', 'help', 'vim', 'ruby', 'javascript' },
 
   highlight = { enable = true },
   indent = { enable = true, disable = { 'python' } },
@@ -307,6 +320,11 @@ local on_attach = function(_, bufnr)
 
     vim.keymap.set('n', keys, func, { buffer = bufnr, desc = desc })
   end
+
+  -- Disable virtual text
+  vim.diagnostic.config({
+    virtual_text = false,
+  })
 
   nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
   nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')

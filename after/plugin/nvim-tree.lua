@@ -9,4 +9,10 @@ vim.opt.termguicolors = true
 
 vim.keymap.set("n", "<leader>e", ":NvimTreeToggle<CR>")
 -- empty setup using defaults
-require("nvim-tree").setup()
+require("nvim-tree").setup({
+  update_focused_file = {
+    enable = true,
+    update_cwd = true,
+    ignore_list = {},
+  }
+})
